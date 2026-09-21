@@ -4,6 +4,7 @@ package com.srm.creditengine.service;
  * @author DennisFerreira
  * @since 2026-09-21 13:27
  */
+import com.srm.creditengine.domain.Currency;
 import com.srm.creditengine.domain.Receivable;
 import com.srm.creditengine.domain.Settlement;
 import com.srm.creditengine.dto.CalculationResult;
@@ -13,6 +14,8 @@ import com.srm.creditengine.repository.SettlementRepository;
 import com.srm.creditengine.service.pricing.PricingEngineService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -72,5 +75,12 @@ public class SettlementService {
 
         return settlementRepository.save(settlement);
     }
+    public Page<Settlement> listSettlements(Currency currency, Pageable pageable) {
+        if (currency != null) {
+            return settlementRepository.findByPaymentCurrency(currency, pageable);
+        }
+        return settlementRepository.findAll(pageable);
+    }
+
 }
 

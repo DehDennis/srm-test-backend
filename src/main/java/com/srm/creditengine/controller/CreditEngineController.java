@@ -12,6 +12,8 @@ import com.srm.creditengine.service.pricing.PricingEngineService;
 import com.srm.creditengine.service.SettlementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @RestController
 @RequestMapping("/api/v1/credit")
@@ -45,6 +47,15 @@ public class CreditEngineController {
 
         Settlement settlement = settlementService.executeSettlement(idempotencyKey, request);
         return ResponseEntity.ok(settlement);
+    }
+    @GetMapping("/settlements")
+    public ResponseEntity<Page<Settlement>> getSettlements(
+        @RequestParam(required = false) Currency currency,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size) {
+
+        Page<Settlement> result = settlementService.listSettlements(currency, PageRequest.of(page, size));
+        return ResponseEntity.ok(result);
     }
 }
 
