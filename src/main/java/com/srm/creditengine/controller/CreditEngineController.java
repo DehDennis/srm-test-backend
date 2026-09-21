@@ -65,7 +65,7 @@ public class CreditEngineController {
         Page<Settlement> result = settlementService.listSettlements(currency, PageRequest.of(page, size));
         return ResponseEntity.ok(result);
     }
-    // Adicionar no CreditEngineController.java:
+
 
     @GetMapping("/receivables/pending")
     public ResponseEntity<List<Receivable>> getPendingReceivables() {

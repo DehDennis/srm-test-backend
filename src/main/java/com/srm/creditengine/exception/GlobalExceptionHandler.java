@@ -15,17 +15,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
-        Map<String, Object> response = Map.of(
-            "timestamp", LocalDateTime.now(),
-            "status", HttpStatus.BAD_REQUEST.value(),
-            "error", "Bad Request",
-            "message", ex.getMessage()
-        );
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
-
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalState(IllegalStateException ex) {
         Map<String, Object> response = Map.of(
@@ -35,5 +24,16 @@ public class GlobalExceptionHandler {
             "message", ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
+        Map<String, Object> response = Map.of(
+            "timestamp", LocalDateTime.now(),
+            "status", HttpStatus.BAD_REQUEST.value(),
+            "error", "Bad Request",
+            "message", ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
