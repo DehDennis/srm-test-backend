@@ -1,0 +1,11 @@
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/controller/CreditEngineController.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/service/pricing/ChequePricingStrategy.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/dto/CalculationResult.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/CreditEngineApplication.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/dto/SimulateRequest.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/service/pricing/DuplicataPricingStrategy.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/domain/ReceivableType.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/domain/Currency.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/service/pricing/PricingStrategy.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/config/EngineProperties.java
+/Users/dehtech/backend/src/main/java/com/srm/creditengine/service/pricing/PricingEngineService.java

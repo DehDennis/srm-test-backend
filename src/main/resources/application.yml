@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:srmdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+credit-engine:
+  base-rate-monthly: 0.0100 # 1.00% a.m.
+  spreads:
+    DUPLICATA: 0.0150       # 1.50% a.m.
+    CHEQUE: 0.0250          # 2.50% a.m.
+  currencies:
+    BRL: 1.0000
+    USD: 5.4321
