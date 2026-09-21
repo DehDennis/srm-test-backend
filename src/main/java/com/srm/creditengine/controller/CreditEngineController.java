@@ -4,16 +4,21 @@ package com.srm.creditengine.controller;
  * @author DennisFerreira
  * @since 2026-09-21 12:45
  */
+import com.srm.creditengine.domain.Currency;
+import com.srm.creditengine.domain.Receivable;
 import com.srm.creditengine.domain.Settlement;
 import com.srm.creditengine.dto.CalculationResult;
 import com.srm.creditengine.dto.SettlementRequest;
 import com.srm.creditengine.dto.SimulateRequest;
+import com.srm.creditengine.repository.ReceivableRepository;
 import com.srm.creditengine.service.pricing.PricingEngineService;
 import com.srm.creditengine.service.SettlementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/credit")
@@ -22,10 +27,13 @@ public class CreditEngineController {
 
     private final PricingEngineService pricingEngineService;
     private final SettlementService settlementService;
+    private final ReceivableRepository receivableRepository;
 
-    public CreditEngineController(PricingEngineService pricingEngineService, SettlementService settlementService) {
+    public CreditEngineController(PricingEngineService pricingEngineService, SettlementService settlementService,
+        final ReceivableRepository receivableRepository) {
         this.pricingEngineService = pricingEngineService;
         this.settlementService = settlementService;
+        this.receivableRepository = receivableRepository;
     }
 
     @PostMapping("/simulate")
@@ -57,5 +65,16 @@ public class CreditEngineController {
         Page<Settlement> result = settlementService.listSettlements(currency, PageRequest.of(page, size));
         return ResponseEntity.ok(result);
     }
+    // Adicionar no CreditEngineController.java:
+
+    @GetMapping("/receivables/pending")
+    public ResponseEntity<List<Receivable>> getPendingReceivables() {
+        List<Receivable> pending = receivableRepository.findAll()
+            .stream()
+            .filter(r -> r.getStatus() == Receivable.Status.PENDING)
+            .toList();
+        return ResponseEntity.ok(pending);
+    }
+
 }
 
