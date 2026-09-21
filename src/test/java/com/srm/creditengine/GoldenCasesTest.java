@@ -7,7 +7,7 @@ package com.srm.creditengine;
 import com.srm.creditengine.domain.Currency;
 import com.srm.creditengine.domain.ReceivableType;
 import com.srm.creditengine.dto.CalculationResult;
-import com.srm.creditengine.service.PricingEngineService;
+import com.srm.creditengine.service.pricing.PricingEngineService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

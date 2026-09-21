@@ -4,9 +4,12 @@ package com.srm.creditengine.controller;
  * @author DennisFerreira
  * @since 2026-09-21 12:45
  */
+import com.srm.creditengine.domain.Settlement;
 import com.srm.creditengine.dto.CalculationResult;
+import com.srm.creditengine.dto.SettlementRequest;
 import com.srm.creditengine.dto.SimulateRequest;
-import com.srm.creditengine.service.PricingEngineService;
+import com.srm.creditengine.service.pricing.PricingEngineService;
+import com.srm.creditengine.service.SettlementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class CreditEngineController {
 
     private final PricingEngineService pricingEngineService;
+    private final SettlementService settlementService;
 
-    public CreditEngineController(PricingEngineService pricingEngineService) {
+    public CreditEngineController(PricingEngineService pricingEngineService, SettlementService settlementService) {
         this.pricingEngineService = pricingEngineService;
+        this.settlementService = settlementService;
     }
 
     @PostMapping("/simulate")
@@ -32,4 +37,14 @@ public class CreditEngineController {
         );
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/settle")
+    public ResponseEntity<Settlement> settle(
+        @RequestHeader("X-Idempotency-Key") String idempotencyKey,
+        @RequestBody SettlementRequest request) {
+
+        Settlement settlement = settlementService.executeSettlement(idempotencyKey, request);
+        return ResponseEntity.ok(settlement);
+    }
 }
+
