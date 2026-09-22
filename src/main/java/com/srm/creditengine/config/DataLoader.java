@@ -1,9 +1,5 @@
 package com.srm.creditengine.config;
 
-/**
- * @author DennisFerreira
- * @since 2026-09-21 15:22
- */
 import com.srm.creditengine.domain.Currency;
 import com.srm.creditengine.domain.Receivable;
 import com.srm.creditengine.domain.ReceivableType;
@@ -21,13 +17,16 @@ public class DataLoader {
     @Bean
     CommandLineRunner initDatabase(ReceivableRepository repository) {
         return args -> {
+            // Se o banco estiver vazio (ex: ao subir o container pela 1ª vez ou limpar volumes)
             if (repository.count() == 0) {
                 List<Receivable> sampleReceivables = List.of(
                     // C1 / Golden Case 1
                     new Receivable(ReceivableType.DUPLICATA, new BigDecimal("100000.00"), 3, Currency.BRL),
                     // C2 / Golden Case 2
                     new Receivable(ReceivableType.CHEQUE, new BigDecimal("25000.00"), 2, Currency.BRL),
-                    // Outros títulos variados para simulação
+                    // C3 / Golden Case 3 (Cross-Currency)
+                    new Receivable(ReceivableType.DUPLICATA, new BigDecimal("100000.00"), 3, Currency.USD),
+                    // Outros títulos para testes variados na interface
                     new Receivable(ReceivableType.DUPLICATA, new BigDecimal("50000.00"), 1, Currency.BRL),
                     new Receivable(ReceivableType.DUPLICATA, new BigDecimal("180000.00"), 6, Currency.BRL),
                     new Receivable(ReceivableType.CHEQUE, new BigDecimal("15000.00"), 4, Currency.BRL),
@@ -35,7 +34,7 @@ public class DataLoader {
                 );
 
                 repository.saveAll(sampleReceivables);
-                System.out.println(">>> Massa de dados de Recebíveis carregada com sucesso! (" + sampleReceivables.size() + " registros)");
+                System.out.println(">>> Massa de dados inicial (7 títulos) carregada no banco de dados com sucesso!");
             }
         };
     }
